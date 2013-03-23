@@ -63,7 +63,6 @@ public class Loader {
                         currentAminoAcidList.add(AminoAcid.valueOf(lineContent[3].toUpperCase()));
                     } catch (IllegalArgumentException e){
                         currentAminoAcidList.add(null);
-                        System.out.println("NO " + lineContent[3]);
                     }
 
                     if(lineContent[4].equalsIgnoreCase("Beta")){
@@ -74,7 +73,6 @@ public class Loader {
                         currentStructureList.add(Structure.COIL);
                     } else {
                         currentStructureList.add(null);
-                        System.out.println("Wrong structure");
                     }
 
                 }
