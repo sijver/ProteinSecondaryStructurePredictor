@@ -4,7 +4,6 @@ import main.core.AminoAcid;
 import main.core.Protein;
 
 import java.util.EnumMap;
-import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -51,7 +50,7 @@ public class AminoAcidStatistics {
                 }
             }
             aminoAcidFrequency.remove(maxFreqAcid);
-            statsString.append(maxFreqAcid + " " + maxFrequency + "\n");
+            statsString.append(String.format("%1$s   %2$.3f%%\n", maxFreqAcid, maxFrequency * 100));
         }
 
         return statsString.toString();
@@ -63,7 +62,7 @@ public class AminoAcidStatistics {
         StringBuilder statsString = new StringBuilder();
 
         for(AminoAcid aminoAcid : AminoAcid.values()){
-            statsString.append(aminoAcid + " " + aminoAcidFrequency.get(aminoAcid) + "\n");
+            statsString.append(String.format("%1$s   %2$.3f%%\n", aminoAcid, aminoAcidFrequency.get(aminoAcid) * 100));
         }
         return statsString.toString();
     }
