@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Q3 {
 
-    public double getQ3Quality(List<Structure> proteinStructure1, List<Structure> proteinStructure2){
+    public static double getQ3Quality(List<Structure> proteinStructure1, List<Structure> proteinStructure2){
         int residuesCorrectlyPredicted = 0;
 
         for(int i = 0; i < proteinStructure1.size(); i++){
