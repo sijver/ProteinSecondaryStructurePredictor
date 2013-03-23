@@ -12,17 +12,25 @@ import java.util.List;
  */
 public class ChouFasman {
 
-    private static EnumMap<AminoAcid, EnumMap<Structure, Double>> getAminoAcidPropensities(List<Protein> proteinList){
+    private EnumMap<AminoAcid, EnumMap<Structure, Double>> aminoAcidPropensities = null;
+    private double[][] selfInformation;
+    private double[][][] pairInformation;
+
+    public ChouFasman(List<Protein> proteinList) {
+        computeAminoAcidPropensities(proteinList);
+    }
+
+    private void computeAminoAcidPropensities(List<Protein> proteinList) {
         int[] eachAminoAcidNumber = new int[AminoAcid.values().length];
         int[] eachStructureNumber = new int[Structure.values().length];
         int[][] eachAminoAcidVsStructureNumber = new int[AminoAcid.values().length][Structure.values().length];
         int totalAminoAcidsNumber = 0;
 
-        for(Protein protein : proteinList){
-            for(int i = 0; i < protein.getProteinSequence().size(); i++){
+        for (Protein protein : proteinList) {
+            for (int i = 0; i < protein.getProteinSequence().size(); i++) {
                 AminoAcid currentAminoAcid = protein.getProteinSequence().get(i);
                 Structure currentStructure = protein.getProteinStructure().get(i);
-                if(currentAminoAcid != null){
+                if (currentAminoAcid != null) {
                     eachAminoAcidNumber[currentAminoAcid.ordinal()]++;
                     eachStructureNumber[currentStructure.ordinal()]++;
                     eachAminoAcidVsStructureNumber[currentAminoAcid.ordinal()][currentStructure.ordinal()]++;
@@ -31,65 +39,49 @@ public class ChouFasman {
             }
         }
 
-        EnumMap<AminoAcid, EnumMap<Structure, Double>> aminoAcidFrequency = new EnumMap<AminoAcid, EnumMap<Structure, Double>>(AminoAcid.class);
-        for(AminoAcid aminoAcid : AminoAcid.values()){
+        aminoAcidPropensities = new EnumMap<AminoAcid, EnumMap<Structure, Double>>(AminoAcid.class);
+        for (AminoAcid aminoAcid : AminoAcid.values()) {
             EnumMap<Structure, Double> structurePropensites = new EnumMap<Structure, Double>(Structure.class);
-            for(Structure structure : Structure.values()){
-                structurePropensites.put(structure, ((double)eachAminoAcidVsStructureNumber[aminoAcid.ordinal()][structure.ordinal()] * totalAminoAcidsNumber) / ((double) eachStructureNumber[structure.ordinal()] * eachAminoAcidNumber[aminoAcid.ordinal()]));
+            for (Structure structure : Structure.values()) {
+                structurePropensites.put(structure, ((double) eachAminoAcidVsStructureNumber[aminoAcid.ordinal()][structure.ordinal()] * totalAminoAcidsNumber) / ((double) eachStructureNumber[structure.ordinal()] * eachAminoAcidNumber[aminoAcid.ordinal()]));
             }
-            aminoAcidFrequency.put(aminoAcid, structurePropensites);
+            aminoAcidPropensities.put(aminoAcid, structurePropensites);
         }
 
+        selfInformation = new double[AminoAcid.values().length][Structure.values().length];
 
-//        EnumMap<AminoAcid, EnumMap<Structure, Double>> aminoAcidFrequency = new EnumMap<AminoAcid, EnumMap<Structure, Double>>(AminoAcid.class);
-//        for(AminoAcid aminoAcid : AminoAcid.values()){
-//            EnumMap<Structure, Double> structurePropensites = new EnumMap<Structure, Double>(Structure.class);
-//            for(Structure structure : Structure.values()){
-//                structurePropensites.put(structure, 0.0);
-//            }
-//            aminoAcidFrequency.put(aminoAcid, structurePropensites);
-//        }
-//
-//        for(Protein protein : proteinList){
-//            for(int i = 0; i < protein.getProteinSequence().size(); i++){
-//                AminoAcid currentAminoAcid = protein.getProteinSequence().get(i);
-//                Structure currentStructure = protein.getProteinStructure().get(i);
-//                if(currentAminoAcid != null){
-//                    EnumMap<Structure, Double> structurePropensities = aminoAcidFrequency.get(currentAminoAcid);
-//                    structurePropensities.put(currentStructure, structurePropensities.get(currentStructure) + 1);
-//                    aminoAcidFrequency.put(currentAminoAcid, structurePropensities);
-//                    totalAminoAcidsNumber++;
-//                }
-//            }
-//        }
-//
-//        for(AminoAcid aminoAcid : AminoAcid.values()){
-//            for(Structure structure : Structure.values()){
-//                EnumMap<Structure, Double> structurePropensities = aminoAcidFrequency.get(aminoAcid);
-//                structurePropensities.put(structure, structurePropensities.get(structure) / totalAminoAcidsNumber);
-//                aminoAcidFrequency.put(aminoAcid, structurePropensities);
-//            }
-//        }
+        for (int i = 0; i < AminoAcid.values().length; i++) {
+            for (int j = 0; j < Structure.values().length; j++) {
+                selfInformation[i][j] = Math.log((double) eachAminoAcidVsStructureNumber[i][j] / (eachAminoAcidNumber[i] - eachAminoAcidVsStructureNumber[i][j])) + Math.log(((double) totalAminoAcidsNumber - eachStructureNumber[j]) / eachStructureNumber[j]);
+            }
+        }
 
-        return aminoAcidFrequency;
+        pairInformation = new double[AminoAcid.values().length][AminoAcid.values().length][Structure.values().length];
+
+        for (int i = 0; i < AminoAcid.values().length; i++) {
+            for (int j = 0; j < AminoAcid.values().length; j++) {
+                for (int k = 0; k < Structure.values().length; k++) {
+                    pairInformation[i][j][k] = Math.log((double) eachAminoAcidVsStructureNumber[i][j] / (eachAminoAcidNumber[i] - eachAminoAcidVsStructureNumber[i][j])) + Math.log(((double) totalAminoAcidsNumber - eachStructureNumber[j]) / eachStructureNumber[j]);
+                }
+            }
+        }
+
     }
 
-    public static String getAminoAcidsPropensitiesString(List<Protein> proteinList){
-        EnumMap<AminoAcid, EnumMap<Structure, Double>> aminoAcidPropensities = getAminoAcidPropensities(proteinList);
-
+    public String getAminoAcidsPropensitiesString() {
         StringBuilder propensitiesString = new StringBuilder();
 
-        for(Structure structure : Structure.values()){
+        for (Structure structure : Structure.values()) {
             propensitiesString.append("        " + structure);
         }
         propensitiesString.append("\n");
 
-        for(AminoAcid aminoAcid : AminoAcid.values()){
+        for (AminoAcid aminoAcid : AminoAcid.values()) {
             propensitiesString.append(aminoAcid);
             double maxPropensity = Double.MIN_VALUE;
             Structure maxStructure = null;
-            for(Structure structure : Structure.values()){
-                if(maxPropensity < aminoAcidPropensities.get(aminoAcid).get(structure)){
+            for (Structure structure : Structure.values()) {
+                if (maxPropensity < aminoAcidPropensities.get(aminoAcid).get(structure)) {
                     maxPropensity = aminoAcidPropensities.get(aminoAcid).get(structure);
                     maxStructure = structure;
                 }
@@ -99,6 +91,14 @@ public class ChouFasman {
         }
 
         return propensitiesString.toString();
+    }
+
+    public double getSelfInformation(AminoAcid aminoAcid, Structure structure) {
+        return selfInformation[aminoAcid.ordinal()][structure.ordinal()];
+    }
+
+    public double getPairInformation(AminoAcid aminoAcid1, AminoAcid aminoAcid2, Structure structure) {
+        return pairInformation[aminoAcid1.ordinal()][aminoAcid2.ordinal()][structure.ordinal()];
     }
 
 }
