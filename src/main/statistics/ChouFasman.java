@@ -12,9 +12,11 @@ import java.util.List;
  */
 public class ChouFasman {
 
+    public static final int WINDOW_SIZE = 8;
+
     private EnumMap<AminoAcid, EnumMap<Structure, Double>> aminoAcidPropensities = null;
     private double[][] selfInformation;
-    private double[][][] pairInformation;
+    private double[][][][] pairInformation;
 
     public ChouFasman(List<Protein> proteinList) {
         computeAminoAcidPropensities(proteinList);
@@ -24,6 +26,7 @@ public class ChouFasman {
         int[] eachAminoAcidNumber = new int[AminoAcid.values().length];
         int[] eachStructureNumber = new int[Structure.values().length];
         int[][] eachAminoAcidVsStructureNumber = new int[AminoAcid.values().length][Structure.values().length];
+        int[][][][] pairFrequency = new int[AminoAcid.values().length][AminoAcid.values().length][Structure.values().length][WINDOW_SIZE * 2 + 1];
         int totalAminoAcidsNumber = 0;
 
         for (Protein protein : proteinList) {
@@ -35,6 +38,11 @@ public class ChouFasman {
                     eachStructureNumber[currentStructure.ordinal()]++;
                     eachAminoAcidVsStructureNumber[currentAminoAcid.ordinal()][currentStructure.ordinal()]++;
                     totalAminoAcidsNumber++;
+                    for(int j = i - WINDOW_SIZE; j <= i + WINDOW_SIZE; j++){
+                        if(j >= 0 && j < protein.getProteinSequence().size() && protein.getProteinSequence().get(j) != null && j != i){
+                            pairFrequency[currentAminoAcid.ordinal()][protein.getProteinSequence().get(j).ordinal()][currentStructure.ordinal()][WINDOW_SIZE + j - i]++;
+                        }
+                    }
                 }
             }
         }
@@ -56,12 +64,15 @@ public class ChouFasman {
             }
         }
 
-        pairInformation = new double[AminoAcid.values().length][AminoAcid.values().length][Structure.values().length];
+        pairInformation = new double[AminoAcid.values().length][AminoAcid.values().length][Structure.values().length][WINDOW_SIZE * 2 + 1];
 
         for (int i = 0; i < AminoAcid.values().length; i++) {
             for (int j = 0; j < AminoAcid.values().length; j++) {
                 for (int k = 0; k < Structure.values().length; k++) {
-                    pairInformation[i][j][k] = Math.log((double) eachAminoAcidVsStructureNumber[i][j] / (eachAminoAcidNumber[i] - eachAminoAcidVsStructureNumber[i][j])) + Math.log(((double) totalAminoAcidsNumber - eachStructureNumber[j]) / eachStructureNumber[j]);
+                    for(int l = 0; l <= WINDOW_SIZE * 2; l++){
+                        int frequencyWithoutStructure = pairFrequency[i][j][0][l] + pairFrequency[i][j][1][l] + pairFrequency[i][j][2][l];
+                        pairInformation[i][j][k][l] = Math.log((double) pairFrequency[i][j][k][l] / (frequencyWithoutStructure - pairFrequency[i][j][k][l])) + Math.log(((double) eachAminoAcidNumber[i] - eachAminoAcidVsStructureNumber[i][k]) / eachAminoAcidVsStructureNumber[i][k]);
+                    }
                 }
             }
         }
@@ -97,8 +108,8 @@ public class ChouFasman {
         return selfInformation[aminoAcid.ordinal()][structure.ordinal()];
     }
 
-    public double getPairInformation(AminoAcid aminoAcid1, AminoAcid aminoAcid2, Structure structure) {
-        return pairInformation[aminoAcid1.ordinal()][aminoAcid2.ordinal()][structure.ordinal()];
+    public double getPairInformation(AminoAcid aminoAcid1, AminoAcid aminoAcid2, Structure structure, int windowPosition) {
+        return pairInformation[aminoAcid1.ordinal()][aminoAcid2.ordinal()][structure.ordinal()][windowPosition + WINDOW_SIZE];
     }
 
 }
