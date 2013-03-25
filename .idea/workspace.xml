@@ -15,7 +15,7 @@
     </list>
     <ignored path="secSctructPredict.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" time="1364214000379" ignored="false" />
+    <file path="/Dummy.txt" changelist="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" time="1364214291061" ignored="false" />
     <file path="/Start.java" changelist="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" time="1364151999731" ignored="false" />
     <file path="/fragment.java" changelist="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" time="1364046030034" ignored="false" />
     <file path="/Loader.java" changelist="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" time="1364032713572" ignored="false" />
@@ -97,7 +97,7 @@
       <file leaf-file-name="Start.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/Start.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="25" selection-start="973" selection-end="973" vertical-scroll-proportion="0.86197186">
+            <state line="23" column="37" selection-start="637" selection-end="637" vertical-scroll-proportion="0.5267606">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -541,7 +541,11 @@
       <created>1364214002394</created>
       <updated>1364214002394</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="workspace added">
+      <created>1364214292525</created>
+      <updated>1364214292525</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -612,7 +616,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="manifest and idea project file has been added" />
+    <option name="LAST_COMMIT_MESSAGE" value="workspace added" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -646,6 +650,7 @@
     <MESSAGE value="dssp and stride info are added" />
     <MESSAGE value=".idea folder has been added" />
     <MESSAGE value="manifest and idea project file has been added" />
+    <MESSAGE value="workspace added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -762,7 +767,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/Start.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="25" selection-start="973" selection-end="973" vertical-scroll-proportion="0.86197186">
+        <state line="23" column="37" selection-start="637" selection-end="637" vertical-scroll-proportion="0.5267606">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
