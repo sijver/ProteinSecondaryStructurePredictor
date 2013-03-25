@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="secondaryStructPredict:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/secondaryStructPredict_jar</output-path>
+    <root id="archive" name="secondaryStructPredict.jar">
+      <element id="module-output" name="secondaryStructPredict" />
+    </root>
+  </artifact>
+</component>
