@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Gor3 {
 
-    ChouFasman chouFasman;
+    private ChouFasman chouFasman;
 
     public Gor3(ChouFasman chouFasman) {
         this.chouFasman = chouFasman;
@@ -50,14 +50,13 @@ public class Gor3 {
             } else {
                 for (int j = i - ChouFasman.WINDOW_SIZE; j <= i + ChouFasman.WINDOW_SIZE; j++) {
                     if (j >= 0 && j < proteinSequence.size() && proteinSequence.get(j) != null && j != i) {
-                        for(AminoAcid aminoAcid : AminoAcid.values()){
-                            helixScore += chouFasman.getPairInformation(aminoAcid, proteinSequence.get(j), Structure.HELIX, j - i);
-                            betaScore += chouFasman.getPairInformation(aminoAcid, proteinSequence.get(j), Structure.BETA, j - i);
-                            coilScore += chouFasman.getPairInformation(aminoAcid, proteinSequence.get(j), Structure.COIL, j - i);
+                        for (AminoAcid aminoAcid : AminoAcid.values()) {
+                            helixScore += chouFasman.getPairInformation(aminoAcid, proteinSequence.get(j), Structure.HELIX, j - i) * chouFasman.getAminoAcidFrequency(aminoAcid);
+                            betaScore += chouFasman.getPairInformation(aminoAcid, proteinSequence.get(j), Structure.BETA, j - i) * chouFasman.getAminoAcidFrequency(aminoAcid);
+                            coilScore += chouFasman.getPairInformation(aminoAcid, proteinSequence.get(j), Structure.COIL, j - i) * chouFasman.getAminoAcidFrequency(aminoAcid);
                         }
                     }
                 }
-                System.out.println(helixScore+ "  " + betaScore + "  " + coilScore);
             }
 
             if (helixScore >= betaScore && helixScore >= coilScore) {
