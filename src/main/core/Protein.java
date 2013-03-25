@@ -1,8 +1,6 @@
 package main.core;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,7 +54,7 @@ public class Protein {
         StringBuilder proteinString = new StringBuilder();
         proteinString.append("Protein: " + pdbCode + " " + pdbChainCode + "\n");
         proteinString.append("Amino acids: " + Arrays.toString(proteinSequence.toArray()) + "\n");
-        proteinString.append("Structure: " + Arrays.toString(proteinStructure.toArray())+ "\n");
+        proteinString.append("Structure: " + Arrays.toString(proteinStructure.toArray()) + "\n");
         return proteinString.toString();
     }
 }

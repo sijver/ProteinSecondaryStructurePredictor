@@ -9,16 +9,16 @@ import java.util.List;
  */
 public class Q3 {
 
-    public static double getQ3Quality(List<Structure> proteinStructure1, List<Structure> proteinStructure2){
+    public static double getQ3Quality(List<Structure> proteinStructure1, List<Structure> proteinStructure2) {
         int residuesCorrectlyPredicted = 0;
 
-        for(int i = 0; i < proteinStructure1.size(); i++){
-            if(proteinStructure1.get(i) == proteinStructure2.get(i)){
+        for (int i = 0; i < proteinStructure1.size(); i++) {
+            if (proteinStructure1.get(i) == proteinStructure2.get(i)) {
                 residuesCorrectlyPredicted++;
             }
         }
 
-        return (double)residuesCorrectlyPredicted / proteinStructure1.size();
+        return (double) residuesCorrectlyPredicted / proteinStructure1.size();
     }
 
 }

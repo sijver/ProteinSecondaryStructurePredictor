@@ -50,7 +50,7 @@ public class ChouFasman {
             }
         }
 
-        for(int i = 0; i < aminoAcidFrequencyArray.length; i++){
+        for (int i = 0; i < aminoAcidFrequencyArray.length; i++) {
             aminoAcidFrequencyArray[i] /= totalAminoAcidsNumber;
         }
 
@@ -119,7 +119,7 @@ public class ChouFasman {
         return pairInformation[aminoAcid1.ordinal()][aminoAcid2.ordinal()][structure.ordinal()][windowPosition + WINDOW_SIZE];
     }
 
-    public double getAminoAcidFrequency(AminoAcid aminoAcid){
+    public double getAminoAcidFrequency(AminoAcid aminoAcid) {
         return aminoAcidFrequencyArray[aminoAcid.ordinal()];
     }
 

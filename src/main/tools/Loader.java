@@ -23,7 +23,7 @@ public class Loader {
         this.inputFile = inputFile;
     }
 
-    public List<Protein> readFile(){
+    public List<Protein> readFile() {
         proteinList = new LinkedList<Protein>();
         BufferedReader fileReader = null;
         String line = null;
@@ -41,8 +41,8 @@ public class Loader {
                 if (line != null) {
                     String[] lineContent = line.split("[ \t]+");
 
-                    if(!lineContent[0].equals(currentPdbCode)){
-                        if(!currentPdbCode.equals("")){
+                    if (!lineContent[0].equals(currentPdbCode)) {
+                        if (!currentPdbCode.equals("")) {
                             proteinList.add(new Protein(currentAminoAcidList, currentStructureList, currentPdbCode, currentPdbChainCode));
                             currentAminoAcidList = new LinkedList<AminoAcid>();
                             currentStructureList = new LinkedList<Structure>();
@@ -52,24 +52,24 @@ public class Loader {
                         currentPdbSequenceCode = Integer.parseInt(lineContent[2]);
                     }
 
-                    for(int i = currentPdbSequenceCode + 1; i < Integer.parseInt(lineContent[2]); i++){
+                    for (int i = currentPdbSequenceCode + 1; i < Integer.parseInt(lineContent[2]); i++) {
                         currentAminoAcidList.add(null);
                         currentStructureList.add(null);
                     }
 
                     currentPdbSequenceCode = Integer.parseInt(lineContent[2]);
 
-                    try{
+                    try {
                         currentAminoAcidList.add(AminoAcid.valueOf(lineContent[3].toUpperCase()));
-                    } catch (IllegalArgumentException e){
+                    } catch (IllegalArgumentException e) {
                         currentAminoAcidList.add(null);
                     }
 
-                    if(lineContent[4].equalsIgnoreCase("Beta")){
+                    if (lineContent[4].equalsIgnoreCase("Beta")) {
                         currentStructureList.add(Structure.BETA);
-                    } else if(lineContent[4].equalsIgnoreCase("Helix")){
+                    } else if (lineContent[4].equalsIgnoreCase("Helix")) {
                         currentStructureList.add(Structure.HELIX);
-                    } else if(lineContent[4].equalsIgnoreCase("Coil") || (lineContent[4].equalsIgnoreCase("Other"))){
+                    } else if (lineContent[4].equalsIgnoreCase("Coil") || (lineContent[4].equalsIgnoreCase("Other"))) {
                         currentStructureList.add(Structure.COIL);
                     } else {
                         currentStructureList.add(null);
@@ -84,7 +84,7 @@ public class Loader {
             System.out.println("An IO error has occured: " + e.getMessage());
             System.exit(1);
         } finally {
-            proteinList.add(new Protein(currentAminoAcidList, currentStructureList, currentPdbCode,currentPdbChainCode));
+            proteinList.add(new Protein(currentAminoAcidList, currentStructureList, currentPdbCode, currentPdbChainCode));
             if (fileReader != null) {
                 try {
                     fileReader.close();
