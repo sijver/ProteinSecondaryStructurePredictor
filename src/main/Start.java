@@ -23,10 +23,10 @@ public class Start {
         List<Protein> proteinListStride = loader.readFile();
 
         System.out.println("DSSP amino acid frequencies:");
-        System.out.println(AminoAcidStatistics.getAminoAcidFreqSortStats(proteinListDssp));
+        System.out.println(AminoAcidStatistics.getAminoAcidNameSortStats(proteinListDssp));
 
         System.out.println("STRIDE amino acid frequencies:");
-        System.out.println(AminoAcidStatistics.getAminoAcidFreqSortStats(proteinListStride));
+        System.out.println(AminoAcidStatistics.getAminoAcidNameSortStats(proteinListStride));
 
         ChouFasman chouFasmanDssp = new ChouFasman(proteinListDssp);
         System.out.println("DSSP amino acids propensities:");
@@ -37,6 +37,9 @@ public class Start {
         System.out.println(chouFasmanStride.getAminoAcidsPropensitiesString());
 
         System.out.println("            DSSP           STRIDE");
+
+        double dsspSum = 0;
+        double strideSum = 0;
 
         for (int i = 0; i < proteinListDssp.size(); i++) {
             Protein proteinDssp = proteinListDssp.remove(0);
@@ -49,8 +52,20 @@ public class Start {
             Gor3 gor3Stride = new Gor3(chouFasmanStride);
             Protein predictedProteinStride = gor3Stride.makePrediction(proteinStride);
 
-            System.out.println(proteinDssp.getPdbCode());
+//            for(Structure structure : proteinDssp.getProteinStructure()){
+//                if(structure!=null)System.out.print(structure.toString().substring(0, 1));else
+//                    System.out.print(" ");
+//            }
+//            System.out.println();
+//            for(Structure structure : predictedProteinDssp.getProteinStructure()){
+//                if(structure!=null)System.out.print(structure.toString().substring(0, 1));
+//            }
+//            System.out.println();
+
+            System.out.println(proteinDssp.getPdbCode() + "_" + proteinDssp.getPdbChainCode());
             System.out.println(String.format("Q3:         %1$.2f%%         %2$.2f%%", Q3.getQ3Quality(proteinDssp.getProteinStructure(), predictedProteinDssp.getProteinStructure()) * 100, Q3.getQ3Quality(proteinStride.getProteinStructure(), predictedProteinStride.getProteinStructure()) * 100));
+            dsspSum += Q3.getQ3Quality(proteinDssp.getProteinStructure(), predictedProteinDssp.getProteinStructure()) * 100;
+            strideSum += Q3.getQ3Quality(proteinStride.getProteinStructure(), predictedProteinStride.getProteinStructure()) * 100;
             String mccHelixDssp = (MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(proteinDssp.getProteinStructure(), predictedProteinDssp.getProteinStructure(), Structure.HELIX) < 0) ? "error" : String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(proteinDssp.getProteinStructure(), predictedProteinDssp.getProteinStructure(), Structure.HELIX));
             String mccBetaDssp = (MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(proteinDssp.getProteinStructure(), predictedProteinDssp.getProteinStructure(), Structure.BETA) < 0) ? "error" : String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(proteinDssp.getProteinStructure(), predictedProteinDssp.getProteinStructure(), Structure.BETA));
             String mccCoilDssp = (MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(proteinDssp.getProteinStructure(), predictedProteinDssp.getProteinStructure(), Structure.COIL) < 0) ? "error" : String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(proteinDssp.getProteinStructure(), predictedProteinDssp.getProteinStructure(), Structure.COIL));
@@ -61,8 +76,11 @@ public class Start {
             System.out.println(String.format("MCC BETA:   %1$s          %2$s", mccBetaDssp, mccBetaStride));
             System.out.println(String.format("MCC COIL:   %1$s          %2$s", mccCoilDssp, mccCoilStride));
             proteinListDssp.add(proteinDssp);
+            proteinListStride.add(proteinStride);
         }
 
+        System.out.println(String.format("DSSP average: %1$.3f%%", dsspSum / proteinListDssp.size()));
+        System.out.println(String.format("STRIDE average: %1$.3f%%", strideSum / proteinListStride.size()));
 
     }
 
