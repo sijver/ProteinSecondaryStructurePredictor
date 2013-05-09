@@ -15,6 +15,8 @@ public class Gor3 {
 
     private ChouFasman chouFasman;
 
+    private double[][] scores;
+
     public Gor3(ChouFasman chouFasman) {
         this.chouFasman = chouFasman;
     }
@@ -25,6 +27,8 @@ public class Gor3 {
         double coilScore;
 
         List<AminoAcid> proteinSequence = protein.getProteinSequence();
+
+        scores = new double[proteinSequence.size()][3];
 
         List<Structure> predictedProteinStructure = new LinkedList<Structure>();
 
@@ -47,6 +51,10 @@ public class Gor3 {
                         coilScore += chouFasman.getPairInformation(proteinSequence.get(i), proteinSequence.get(j), Structure.COIL, j - i);
                     }
                 }
+
+                scores[i][0] = helixScore;
+                scores[i][1] = betaScore;
+                scores[i][2] = coilScore;
             } else {
                 for (int j = i - ChouFasman.WINDOW_SIZE; j <= i + ChouFasman.WINDOW_SIZE; j++) {
                     if (j >= 0 && j < proteinSequence.size() && proteinSequence.get(j) != null && j != i) {
@@ -71,4 +79,7 @@ public class Gor3 {
         return new Protein(proteinSequence, predictedProteinStructure, protein.getPdbCode(), protein.getPdbChainCode());
     }
 
+    public double[][] getScores() {
+        return scores;
+    }
 }
