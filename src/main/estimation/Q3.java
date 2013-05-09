@@ -17,7 +17,7 @@ public class Q3 {
             if (proteinStructure1.get(i) == proteinStructure2.get(i)) {
                 residuesCorrectlyPredicted++;
             }
-            if(proteinStructure1.get(i) != null){
+            if (proteinStructure1.get(i) != null) {
                 residueTotal++;
             }
         }
