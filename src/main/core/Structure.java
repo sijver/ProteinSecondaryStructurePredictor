@@ -8,7 +8,7 @@ public enum Structure {
     HELIX,
     COIL;
 
-    public static Structure getStructureFromLetter(String letter){
+    public static Structure getStructureFromLetter(String letter) {
         if (letter.equalsIgnoreCase("e")) return BETA;
         else if (letter.equalsIgnoreCase("h")) return HELIX;
         else if (letter.equalsIgnoreCase("c")) return COIL;
