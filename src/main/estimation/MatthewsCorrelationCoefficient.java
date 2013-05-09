@@ -16,17 +16,19 @@ public class MatthewsCorrelationCoefficient {
         int falseNegative = 0;
 
         for (int i = 0; i < proteinStructure1.size(); i++) {
-            if (proteinStructure1.get(i) == structure) {
-                if (proteinStructure2.get(i) == structure) {
-                    truePositive++;
+            if (proteinStructure1.get(i) != null && proteinStructure2.get(i) != null) {
+                if (proteinStructure1.get(i) == structure) {
+                    if (proteinStructure2.get(i) == structure) {
+                        truePositive++;
+                    } else {
+                        falseNegative++;
+                    }
                 } else {
-                    falseNegative++;
-                }
-            } else {
-                if (proteinStructure2.get(i) == structure) {
-                    falsePositive++;
-                } else if (proteinStructure1.get(i) == proteinStructure2.get(i)) {
-                    trueNegative++;
+                    if (proteinStructure2.get(i) == structure) {
+                        falsePositive++;
+                    } else if (proteinStructure1.get(i) == proteinStructure2.get(i)) {
+                        trueNegative++;
+                    }
                 }
             }
         }
