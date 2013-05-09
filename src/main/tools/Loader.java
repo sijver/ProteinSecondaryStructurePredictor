@@ -3,15 +3,11 @@ package main.tools;
 import main.core.AminoAcid;
 import main.core.Protein;
 import main.core.Structure;
-import main.estimation.Q3;
-import main.prediction.Gor3;
-import main.statistics.ChouFasman;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;

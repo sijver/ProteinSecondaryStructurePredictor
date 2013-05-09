@@ -2,11 +2,13 @@ package main;
 
 import main.core.Protein;
 import main.core.Structure;
+import main.estimation.MatthewsCorrelationCoefficient;
 import main.estimation.Q3;
 import main.prediction.Gor3;
 import main.statistics.ChouFasman;
 import main.tools.Loader;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -99,21 +101,44 @@ public class StartMSA {
             }
             System.out.println(predictingProtein.getPdbCode() + ":");
 
+            Protein predictedProteinDsspNoMSA = gor3Dssp.makePrediction(predictingProtein);
+            Protein predictedProteinStrideNoMSA = gor3Stride.makePrediction(predictingProtein);
 
             System.out.println("   DSSP:");
             System.out.println("      Real structure:                    " + structureToString(predictingProteinStructure));
             System.out.println("      Predicted structure (with MSA):    " + predictStructureToString(predictingProtein, predictedStructureDssp));
-            System.out.println("      Predicted structure (without MSA): " + predictStructureToString(predictingProtein, gor3Dssp.makePrediction(predictingProtein).getProteinStructure()));
+            System.out.println("      Predicted structure (without MSA): " + predictStructureToString(predictingProtein, predictedProteinDsspNoMSA.getProteinStructure()));
 
             System.out.println(String.format("      Q3 (with/without MSA):    %1$.2f%% / %2$.2f%%", Q3.getQ3Quality(predictingProteinStructureWithGaps, predictedStructureDssp) * 100, Q3.getQ3Quality(predictingProteinStructureWithGaps, gor3Dssp.makePrediction(predictingProtein).getProteinStructure()) * 100));
 
+            String mccHelixDsspMSA = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedStructureDssp, Structure.HELIX));
+            String mccBetaDsspMSA = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedStructureDssp, Structure.BETA));
+            String mccCoilDsspMSA = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedStructureDssp, Structure.COIL));
+
+            String mccHelixDssp = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedProteinDsspNoMSA.getProteinStructure(), Structure.HELIX));
+            String mccBetaDssp = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedProteinDsspNoMSA.getProteinStructure(), Structure.BETA));
+            String mccCoilDssp = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedProteinDsspNoMSA.getProteinStructure(), Structure.COIL));
+
+            System.out.println(String.format("      MCC with MSA (H/E/C):     %1$s  / %2$s  / %3$s", mccHelixDsspMSA, mccBetaDsspMSA, mccCoilDsspMSA));
+            System.out.println(String.format("      MCC without MSA (H/E/C):  %1$s  / %2$s  / %3$s", mccHelixDssp, mccBetaDssp, mccCoilDssp));
 
             System.out.println("   STRIDE:");
             System.out.println("      Real structure:                    " + structureToString(predictingProteinStructure));
             System.out.println("      Predicted structure (with MSA):    " + predictStructureToString(predictingProtein, predictedStructureStride));
-            System.out.println("      Predicted structure (without MSA): " + predictStructureToString(predictingProtein, gor3Stride.makePrediction(predictingProtein).getProteinStructure()));
+            System.out.println("      Predicted structure (without MSA): " + predictStructureToString(predictingProtein, predictedProteinStrideNoMSA.getProteinStructure()));
 
             System.out.println(String.format("      Q3 (with/without MSA):    %1$.2f%% / %2$.2f%%", Q3.getQ3Quality(predictingProteinStructureWithGaps, predictedStructureStride) * 100, Q3.getQ3Quality(predictingProteinStructureWithGaps, gor3Stride.makePrediction(predictingProtein).getProteinStructure()) * 100));
+
+            String mccHelixStrideMSA = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedStructureStride, Structure.HELIX));
+            String mccBetaStrideMSA = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedStructureStride, Structure.BETA));
+            String mccCoilStrideMSA = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedStructureStride, Structure.COIL));
+
+            String mccHelixStride = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedProteinStrideNoMSA.getProteinStructure(), Structure.HELIX));
+            String mccBetaStride = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedProteinStrideNoMSA.getProteinStructure(), Structure.BETA));
+            String mccCoilStride = String.format("%1$.3f", MatthewsCorrelationCoefficient.getMatthewsCorrelationCoefficient(predictingProteinStructureWithGaps, predictedProteinStrideNoMSA.getProteinStructure(), Structure.COIL));
+
+            System.out.println(String.format("      MCC with MSA (H/E/C):     %1$s  / %2$s  / %3$s", mccHelixStrideMSA, mccBetaStrideMSA, mccCoilStrideMSA));
+            System.out.println(String.format("      MCC without MSA (H/E/C):  %1$s  / %2$s  / %3$s", mccHelixStride, mccBetaStride, mccCoilStride));
 
             System.out.println();
         }
@@ -138,6 +163,16 @@ public class StartMSA {
             }
         }
         return stringPredict.toString();
+    }
+
+    public static List<Structure> getStructureWithoutGaps(Protein predictingProteinWithGaps, List<Structure> structureList) {
+        List<Structure> structure = new ArrayList<Structure>();
+        for (int i = 0; i < predictingProteinWithGaps.getProteinSequence().size(); i++) {
+            if (predictingProteinWithGaps.getProteinSequence().get(i) != null) {
+                structure.add(structureList.get(i));
+            }
+        }
+        return structure;
     }
 
 }
