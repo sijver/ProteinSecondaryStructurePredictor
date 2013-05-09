@@ -7,14 +7,13 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" name="Default" comment="psvm for MSA GOR 3 has been added">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/tools/Loader.java" afterPath="$PROJECT_DIR$/src/main/tools/Loader.java" />
+    <list default="true" id="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="ce19189b-32b0-43db-9065-56aedf500ac1" name="Failed commit: Default" comment="dssp and stride info are added" />
     <ignored path="secSctructPredict.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" time="1368093497490" ignored="false" />
+    <file path="/Dummy.txt" changelist="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" time="1368093524024" ignored="false" />
     <file path="/Start.java" changelist="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" time="1364151999731" ignored="false" />
     <file path="/fragment.java" changelist="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" time="1368093482760" ignored="false" />
     <file path="/Loader.java" changelist="ffc18eb4-47c8-4bbb-aab6-aa7c7a9e8c61" time="1367962221219" ignored="false" />
@@ -707,7 +706,11 @@
       <created>1368090687565</created>
       <updated>1368090687565</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="test main in Loader class has been deleted">
+      <created>1368093526160</created>
+      <updated>1368093526160</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -778,7 +781,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="psvm for MSA GOR 3 has been added" />
+    <option name="LAST_COMMIT_MESSAGE" value="test main in Loader class has been deleted" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -791,7 +794,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="AminoAcid stats string output has been changed" />
     <MESSAGE value="Protein toString() method has been overridden" />
     <MESSAGE value="debug output has been deleted" />
     <MESSAGE value="Gor 3 has been implemented" />
@@ -816,6 +818,7 @@
     <MESSAGE value="it's possible to get the scores matrix for each residue after making prediction procedure now" />
     <MESSAGE value="fasta reading procedure for proteins and conformations has been added" />
     <MESSAGE value="psvm for MSA GOR 3 has been added" />
+    <MESSAGE value="test main in Loader class has been deleted" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
