@@ -33,11 +33,22 @@ public class MatthewsCorrelationCoefficient {
             }
         }
 
-        if (truePositive + falsePositive == 0 || truePositive + falseNegative == 0 || trueNegative + falsePositive == 0 || trueNegative + falseNegative == 0) {
-            return 0;
-        } else {
-            return ((double) truePositive * trueNegative - falsePositive * falseNegative) / Math.sqrt((truePositive + falsePositive) * (truePositive + falseNegative) * (trueNegative + falsePositive) * (trueNegative + falseNegative));
-        }
+//        if (truePositive + falsePositive == 0 || truePositive + falseNegative == 0 || trueNegative + falsePositive == 0 || trueNegative + falseNegative == 0) {
+//            return 0;
+//        } else {
+//            return ((double) truePositive * trueNegative - falsePositive * falseNegative) / Math.sqrt((truePositive + falsePositive) * (truePositive + falseNegative) * (trueNegative + falsePositive) * (trueNegative + falseNegative));
+//        }
+        if (truePositive == 0)
+            truePositive = 1;
+        if (trueNegative == 0)
+            trueNegative = 1;
+        if (falsePositive == 0)
+            falsePositive = 1;
+        if (falseNegative == 0)
+            falseNegative = 1;
+
+        return ((double) truePositive * trueNegative - falsePositive * falseNegative) / Math.sqrt((truePositive + falsePositive) * (truePositive + falseNegative) * (trueNegative + falsePositive) * (trueNegative + falseNegative));
+
     }
 
 }
