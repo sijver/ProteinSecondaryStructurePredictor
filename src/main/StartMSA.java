@@ -32,7 +32,7 @@ public class StartMSA {
         ChouFasman chouFasmanStride = new ChouFasman(proteinListStride);
         Gor3 gor3Stride = new Gor3(chouFasmanStride);
 
-        for (int f = 0; f < MSA_FILE_NAMES.length - 1; f++) {
+        for (int f = 0; f < MSA_FILE_NAMES.length; f++) {
             loader = new Loader(MSA_FILE_NAMES[f]);
             List<Protein> msaSequences = loader.readFastaForMSA(false);
 
